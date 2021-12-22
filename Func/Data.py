@@ -1,6 +1,6 @@
 class Data:
     def __init__(self):
-        self.accesstoken = self.get_config('accesstoken')
+        self.accesstoken = self.accesstoken()
         self.companyid = self.get_config('companyid')
 
         self.data = {
@@ -15,6 +15,11 @@ class Data:
     def get_config(flag:str):
         from Config.config import Config
         return Config().get_config_data(flag)
+
+    @staticmethod
+    def get_accesstoken():
+        from Func import AccessToken
+        return AccessToken.get_accesstoken()
 
     def set_data(self, emp_no: str, name: str, image: str):
         self.data["empnum"] = emp_no
