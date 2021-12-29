@@ -39,6 +39,23 @@ def get_imagebinary(file: str) -> str:
     return " ".join(imagebinary)
 
 
+def get_accesstoken():
+    from datetime import datetime
+    import jpype
+
+    classpath = 'Lib\\TestJPype.jar'
+    jpype.startJVM(
+        jpype.getDefaultJVMPath(),
+        "-Djava.class.path={classpath}".format(classpath=classpath),
+        convertStrings=True,
+    )
+    jpkg = jpype.JPackage('net.oboki.utils')
+    print(jpkg)
+    r = jpkg.ReverseString()
+    r.reverse("test")
+
+
 # print(img_to_hex(filename))
 # get_empno_all()
-print(get_url("url_dev"))
+# print(get_url("url_dev"))
+get_accesstoken()
