@@ -40,7 +40,6 @@ def get_imagebinary(file: str) -> str:
 
 
 def get_accesstoken():
-    from datetime import datetime
     import jpype
 
     classpath = 'Lib\\TestJPype.jar'
@@ -50,12 +49,27 @@ def get_accesstoken():
         convertStrings=True,
     )
     jpkg = jpype.JPackage('net.oboki.utils')
-    print(jpkg)
+    print(jpkg, type(jpkg))
     r = jpkg.ReverseString()
+    print(r)
     r.reverse("test")
+
+
+def test():
+    import jnius_config
+    print(jnius_config.get_classpath())
+    jnius_config.set_classpath('Lib\\TestJPype.jar')
+    print(jnius_config.get_classpath())
+    #autoclass('java.lang.System').out.println('Hello world')
+
+    import jnius
+    jnius_config.set_classpath('Lib\\TestJPype.jar')
+    testjnius = jnius.autoclass('net.oboki.utils')
+    #t = testjnius()
+    #t.reverse("test")
 
 
 # print(img_to_hex(filename))
 # get_empno_all()
 # print(get_url("url_dev"))
-get_accesstoken()
+test()
