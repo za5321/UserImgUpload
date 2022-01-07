@@ -39,32 +39,54 @@ def get_imagebinary(file: str) -> str:
     return " ".join(imagebinary)
 
 
-def get_accesstoken():
+def test2():
     import jpype
 
-    classpath = 'Lib\\TestJPype.jar'
+    classpath = './Lib/Test.jar'
     jpype.startJVM(
         jpype.getDefaultJVMPath(),
         "-Djava.class.path={classpath}".format(classpath=classpath),
         convertStrings=True,
     )
-    jpkg = jpype.JPackage('net.oboki.utils')
+    jpkg = jpype.JPackage('test')
     print(jpkg, type(jpkg))
-    r = jpkg.ReverseString()
-    print(r)
-    r.reverse("test")
+    r = jpkg.Test()
+    print(r.sss('sfdg'))
+
+
+def test3():
+    import jpype
+    import os
+    #classpath = './Lib/nets-af.jar'
+    classpath = ['./Lib/nets-af.jar', './Lib/MagicJCrypto-v2.0.0.0.jar']
+    # jpype.startJVM(
+    #     jpype.getDefaultJVMPath(),
+    #     "-Djava.class.path={classpath}".format(classpath=classpath),
+    #     convertStrings=True,
+    # )
+    jpype.startJVM('-ea', classpath=classpath)
+    pkg = jpype.JPackage('nets.af.common.crypt')
+    cc = pkg.Crypt()
+    # 4cb546eec9fd6fd3
+    print(cc.getInstance("MJCHmacSHA256").encrypt("test"))
+    #print(cc.getInstance("ex-ws-moin").encrypt("test"))
 
 
 def test():
     import jnius_config
+    # jnius_config.add_options('-Xmx4056M', '-Xmx4056M')
+    jnius_config.add_options('-Xrs', '-Xmx4096m')
+    jnius_config.set_classpath('.', './Lib/Test.jar')
     print(jnius_config.get_classpath())
-    jnius_config.set_classpath('Lib\\TestJPype.jar')
-    print(jnius_config.get_classpath())
+
+    import os
+    os.environ['CLASSPATH'] = "./Lib/Test.jar"
+    from jnius import autoclass
+    tclass = autoclass('test.test.utils')
+    # t = tclass('abc')
     #autoclass('java.lang.System').out.println('Hello world')
 
-    import jnius
-    jnius_config.set_classpath('Lib\\TestJPype.jar')
-    testjnius = jnius.autoclass('net.oboki.utils')
+
     #t = testjnius()
     #t.reverse("test")
 
@@ -72,4 +94,5 @@ def test():
 # print(img_to_hex(filename))
 # get_empno_all()
 # print(get_url("url_dev"))
-test()
+test3()
+# test2()
