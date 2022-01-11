@@ -56,7 +56,7 @@ def test2():
 
 def test3():
     import jpype
-    import os
+
     #classpath = './Lib/nets-af.jar'
     classpath = ['./Lib/nets-af.jar', './Lib/MagicJCrypto-v2.0.0.0.jar']
     # jpype.startJVM(
@@ -65,11 +65,35 @@ def test3():
     #     convertStrings=True,
     # )
     jpype.startJVM('-ea', classpath=classpath)
-    pkg = jpype.JPackage('nets.af.common.crypt')
-    cc = pkg.Crypt()
-    # 4cb546eec9fd6fd3
-    print(cc.getInstance("MJCHmacSHA256").encrypt("test"))
-    #print(cc.getInstance("ex-ws-moin").encrypt("test"))
+    config_pkg = jpype.JPackage('nets.af.common.conf')
+    conf = config_pkg.Config.init('./Config/conf.xml')
+
+    crypt_pkg = jpype.JPackage('nets.af.common.crypt')
+    cc = crypt_pkg.Crypt()
+    cc.init()
+    print(cc.getInstance("TripleDES").encrypt("AbCDeFG/#/20151118023454"))
+    jpype.shutdownJVM()
+
+
+def test4():
+    import jpype
+
+    #classpath = './Lib/nets-af.jar'
+    classpath = ['./Lib/nets-af.jar', './Lib/MagicJCrypto-v2.0.0.0.jar']
+    # jpype.startJVM(
+    #     jpype.getDefaultJVMPath(),
+    #     "-Djava.class.path={classpath}".format(classpath=classpath),
+    #     convertStrings=True,
+    # )
+    jpype.startJVM('-ea', classpath=classpath)
+    config_pkg = jpype.JPackage('nets.af.common.conf')
+    conf = config_pkg.Config.init('./Config/conf.xml')
+
+    crypt_pkg = jpype.JPackage('nets.af.common.crypt')
+    cc = crypt_pkg.Crypt()
+    cc.init()
+    print(cc.getInstance("TripleDES").encrypt("AbCDeFG/#/20151118023454"))
+    jpype.shutdownJVM()
 
 
 def test():
@@ -95,4 +119,5 @@ def test():
 # get_empno_all()
 # print(get_url("url_dev"))
 test3()
+test4()
 # test2()

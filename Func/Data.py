@@ -1,6 +1,6 @@
 class Data:
     def __init__(self):
-        self.accesstoken = self.accesstoken()
+        self.accesstoken = self.get_accesstoken()
         self.companyid = self.get_config('companyid')
 
         self.data = {
