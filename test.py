@@ -71,7 +71,7 @@ def test3():
     crypt_pkg = jpype.JPackage('nets.af.common.crypt')
     cc = crypt_pkg.Crypt()
     cc.init()
-    print(cc.getInstance("TripleDES").encrypt("AbCDeFG/#/20151118023454"))
+    print(cc.getInstance("ex-ws-moin").encrypt("AbCDeFG/#/20151118023454"))
     jpype.shutdownJVM()
 
 

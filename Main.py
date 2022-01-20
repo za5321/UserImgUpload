@@ -16,5 +16,5 @@ if __name__ == "__main__":
 
     for emp_no, name in employees.items():
         file_name = emp_no + '.jpg'
-        send_data: dict = Data().get_data(emp_no, name, File().get_imagebinary(file_name))
-        Send.send(send_data)
+        plain: dict = Data().get_data(emp_no, name, File().get_imagebinary(file_name))
+        print(plain)
