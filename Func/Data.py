@@ -12,7 +12,7 @@ class Data:
         }
 
     @staticmethod
-    def get_config(flag:str):
+    def get_config(flag: str):
         from Config.config import Config
         return Config().get_config_data(flag)
 

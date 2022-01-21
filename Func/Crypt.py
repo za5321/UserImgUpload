@@ -4,23 +4,23 @@ import jpype
 class Crypt:
     def __init__(self):
         self.classpath = ['./Lib/nets-af.jar', './Lib/MagicJCrypto-v2.0.0.0.jar']
-        jpype.startJVM('-ea', classpath=self.classpath)
+        if not self.is_JVM_started():
+            jpype.startJVM('-ea', classpath=self.classpath)
+            self.config()
 
     @staticmethod
     def config():
         config_pkg = jpype.JPackage('nets.af.common.conf')
         conf = config_pkg.Config.init('./Config/conf.xml')
 
-    @staticmethod
-    def encrypt_MOIN(data: str) -> str:
+    def encrypt_MOIN(self, data: str) -> str:
         crypt_pkg = jpype.JPackage('nets.af.common.crypt')
         cc = crypt_pkg.Crypt()
         cc.init()
 
         return cc.getInstance("ex-ws-moin").encrypt(data)
 
-    @staticmethod
-    def encrypt_TDES(data: str) -> str:
+    def encrypt_TDES(self, data: str) -> str:
         crypt_pkg = jpype.JPackage('nets.af.common.crypt')
         cc = crypt_pkg.Crypt()
         cc.init()
@@ -30,3 +30,7 @@ class Crypt:
     @staticmethod
     def shutdown():
         jpype.shutdownJVM()
+
+    @staticmethod
+    def is_JVM_started():
+        return jpype.isJVMStarted()

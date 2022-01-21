@@ -1,8 +1,3 @@
-from Func.Crypt import Crypt
-
-c = Crypt()
-
-
 def get_requestkey() -> str:
     from Config.config import Config
     return Config().get_config_data("requestkey")
@@ -14,8 +9,8 @@ def get_utc() -> str:
 
 
 def get_accesstoken():
-    #return 암호화ㅏㅏㅏ(get_requestkey()+'/#/'+get_utc())
-    pass
+    from Func.Crypt import Crypt
+    return Crypt().encrypt_MOIN(get_requestkey()+'/#/'+get_utc())
 
 
 def get_send_data():
