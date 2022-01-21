@@ -57,7 +57,7 @@ def test2():
 def test3():
     import jpype
 
-    #classpath = './Lib/nets-af.jar'
+    # classpath = './Lib/nets-af.jar'
     classpath = ['./Lib/nets-af.jar', './Lib/MagicJCrypto-v2.0.0.0.jar']
     # jpype.startJVM(
     #     jpype.getDefaultJVMPath(),
@@ -78,7 +78,7 @@ def test3():
 def test4():
     import jpype
 
-    #classpath = './Lib/nets-af.jar'
+    # classpath = './Lib/nets-af.jar'
     classpath = ['./Lib/nets-af.jar', './Lib/MagicJCrypto-v2.0.0.0.jar']
     # jpype.startJVM(
     #     jpype.getDefaultJVMPath(),
@@ -108,16 +108,30 @@ def test():
     from jnius import autoclass
     tclass = autoclass('test.test.utils')
     # t = tclass('abc')
-    #autoclass('java.lang.System').out.println('Hello world')
+    # autoclass('java.lang.System').out.println('Hello world')
+
+    # t = testjnius()
+    # t.reverse("test")
 
 
-    #t = testjnius()
-    #t.reverse("test")
+def send():
+    import requests
+
+    url = 'http://dev.dpt.co.kr/um/EWF/External/RestApi.ashx/load'
+    headers = {"Content-Type": "application/json; charset=utf-8"}
+    data = {
+        "id": "PE8F7E23121C048CCB17E4BB7D871BF60",
+        "uid": "L23113"
+    }
+    response = requests.post(url, json=data, headers=headers, timeout=5)
+    ret = response.json()
+    print(response.json()["success"])
 
 
 # print(img_to_hex(filename))
 # get_empno_all()
 # print(get_url("url_dev"))
-test3()
-test4()
+# test3()
+# test4()
 # test2()
+send()

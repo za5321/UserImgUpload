@@ -18,6 +18,10 @@ if __name__ == "__main__":
     for emp_no, name in employees.items():
         file_name = emp_no + '.jpg'
         plain: dict = Data().get_data(emp_no, name, File().get_imagebinary(file_name))
-        print(plain)
-        print(Crypt().encrypt_TDES(str(plain)))
+        encrypted = Crypt().encrypt_TDES(str(plain))
         Crypt().shutdown()
+
+        if Send.response_status(Send.send(encrypted)):
+            continue
+        else:
+            print("error")

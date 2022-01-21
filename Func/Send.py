@@ -5,13 +5,21 @@ def get_url(flag):
     return Config().get_config_send(flag)
 
 
-def send(data: dict):
+def send(encoding: str) -> str:
     import requests
 
     url_dev = get_url("url_dev")
     url_real = get_url("url_real")
 
     headers = {"Content-Type": "application/json; charset=utf-8"}
-    # response = requests.post(url_real, json=data, headers=headers, timeout=5)
-    # response.json()
-    # 파싱해서 응답코드 받아서 처리
+    data = {
+        "ssopublickey": encoding
+    }
+    response = requests.post(url_real, json=data, headers=headers, timeout=5)
+    return response.json()["statuscode"]
+
+
+def response_status(code: str) -> bool:
+    if code == "202211":
+        return True
+    return False
