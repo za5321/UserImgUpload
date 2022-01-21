@@ -18,6 +18,9 @@
   "Send": {
     "url_dev": "dev",
     "url_real": "real"
+  },
+  "Logging": {
+    "level": "INFO",
+    "format": ""
   }
-
 }

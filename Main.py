@@ -1,10 +1,3 @@
-'''
-1. DB > 사번:이름 딕셔너리
-2. 딕셔너리 돌면서
-- 파일명: 사번+jpg로 hex 받기
-- 사번, 이름, hex > Data > json
-- 전송
-'''
 from Func.Employee import Employee
 from Func.Data import Data
 from Func.File import File
