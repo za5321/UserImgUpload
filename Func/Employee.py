@@ -13,7 +13,7 @@ class Employee:
         cursor = self.con.cursor()
 
         #sql = f"SELECT USERID, USERNAME FROM M_MEMBER WITH(NOLOCK) WHERE LEFT(USERID,1) IN {self.get_config('filter')}"
-        sql = "SELECT USERID, USERNAME FROM M_MEMBER WHERE USERID = 'L23113'"
+        sql = "SELECT USERID, USERNAME FROM M_MEMBER WHERE USERID IN ('L23113', 'L24201', 'L24220')"
         cursor.execute(sql)
         row = cursor.fetchone()
         while row:
@@ -23,4 +23,3 @@ class Employee:
     def get_employees(self) -> dict:
         self.set_employees()
         return self.employees
-

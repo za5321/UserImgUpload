@@ -15,8 +15,7 @@ if __name__ == "__main__":
 
     logger.info("START GETTING EMPLOYEE LIST")
     employees: dict = Employee().get_employees()
-    print(employees)
-    logger.info("FINISH GETTING EMPLOYEE LIST")
+    logger.info("FINISHED GETTING EMPLOYEE LIST")
 
     for emp_no, name in employees.items():
         file_name = emp_no + '.jpg'
@@ -27,13 +26,13 @@ if __name__ == "__main__":
         if not file:
             logger.error(f"{file_name} 파일이 없습니다.")
             continue
-        logger.info("FINISHING GETTING IMAGE FILE")
+        logger.info("FINISHED GETTING IMAGE FILE")
 
         plain: dict = Data().get_data(emp_no, name, file)
         logger.info("START ENCRYPTION")
         encrypted = c.encrypt_TDES(str(plain))
-        logger.info("FINISH ENCRYPTION")
-
+        logger.info("FINISHED ENCRYPTION")
+        # continue
         logger.info("START SENDING DATA TO MOIN")
         response = Send.response_status(Send.send(encrypted))
         if response[0]:

@@ -8,14 +8,13 @@ def get_url(flag):
 def send(encoding: str) -> str:
     import requests
 
-    url_dev = get_url("url_dev")
-    url_real = get_url("url_real")
+    url = get_url("url_dev")
 
     headers = {"Content-Type": "application/json; charset=utf-8"}
     data = {
         "ssopublickey": encoding
     }
-    response = requests.post(url_real, json=data, headers=headers, timeout=5)
+    response = requests.post(url, json=data, headers=headers, timeout=5)
     return response.json()["statuscode"]
 
 
