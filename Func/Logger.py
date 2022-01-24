@@ -25,4 +25,4 @@ class Logger:
 
     @staticmethod
     def formatter():
-        return "[%(levelname)s]%(asctime)s::%(module)s::%(lineno)s::%(message)s"
+        return "[%(levelname)s]%(asctime)s::%(message)s"

@@ -19,7 +19,7 @@ def send(encoding: str) -> str:
     return response.json()["statuscode"]
 
 
-def response_status(code: str) -> bool:
+def response_status(code: str) -> tuple:
     if code == "202211":
-        return True
-    return False
+        return True, code
+    return False, code
