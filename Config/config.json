@@ -6,7 +6,7 @@
     "password": "dnjfdydlf"
   },
   "Employee": {
-    "filter": "('1','3','4','5')"
+    "sql" : "SELECT USERID, USERNAME FROM M_MEMBER WITH(NOLOCK) WHERE LEFT(USERID,1) IN (1. 3. 5. 7)"
   },
   "Data": {
     "requestkey": "requestkey",
@@ -16,8 +16,8 @@
     "path": "D:\\test\\"
   },
   "Send": {
-    "url_dev": "dev",
-    "url_real": "real"
+    "url_dev": "https://devim.lotte.net/im/api/user/img",
+    "url_real": "http://lotteim.lotte.net/im/api/user/img"
   },
   "Logging": {
     "level": "INFO",

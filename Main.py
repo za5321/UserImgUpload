@@ -32,7 +32,7 @@ if __name__ == "__main__":
         logger.info("START ENCRYPTION")
         encrypted = c.encrypt_TDES(str(plain))
         logger.info("FINISHED ENCRYPTION")
-        # continue
+
         logger.info("START SENDING DATA TO MOIN")
         response = Send.response_status(Send.send(encrypted))
         if response[0]:
