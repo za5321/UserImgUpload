@@ -1,23 +1,23 @@
 {
   "Database": {
-    "ip": "10.7.19.12:1433",
-    "name": "EzQ8_Dev",
-    "id": "L23113",
-    "password": "dnjfdydlf"
+    "ip": "127.0.0.1, 1433",
+    "name": "name",
+    "id": "id",
+    "password": "password"
   },
   "Employee": {
-    "sql" : "SELECT USERID, USERNAME FROM M_MEMBER WITH(NOLOCK) WHERE LEFT(USERID,1) IN (1. 3. 5. 7)"
+    "sql" : "Query to select Employee Number and Employee Name from Employee table"
   },
   "Data": {
     "requestkey": "requestkey",
-    "companyid": "071800"
+    "companyid": "companyid"
   },
   "File": {
     "path": "D:\\test\\"
   },
   "Send": {
-    "url_dev": "https://devim.lotte.net/im/api/user/img",
-    "url_real": "http://lotteim.lotte.net/im/api/user/img"
+    "url_dev": "url_dev",
+    "url_real": "url_real"
   },
   "Logging": {
     "level": "INFO",
