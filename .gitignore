@@ -1,0 +1,7 @@
+*.pyc
+log/
+Lib/
+Config/config.json
+Config/conf.dtd
+Config/conf.xml
+test.py

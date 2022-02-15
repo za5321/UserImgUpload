@@ -1,0 +1,26 @@
+{
+  "Database": {
+    "ip": "ip, port",
+    "name": "name",
+    "id": "id",
+    "password": "password"
+  },
+  "Employee": {
+    "sql" : "Query to select Employee Number and Employee Name from Employee table"
+  },
+  "Data": {
+    "requestkey": "requestkey",
+    "companyid": "companyid"
+  },
+  "File": {
+    "path": "User Image File directory path"
+  },
+  "Send": {
+    "url_dev": "url_dev",
+    "url_real": "url_real"
+  },
+  "Logging": {
+    "level": "INFO",
+    "format": ""
+  }
+}
