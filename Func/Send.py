@@ -7,6 +7,7 @@ def get_url(flag):
 
 def send(encoding: str) -> str:
     import requests
+    import json
 
     url = get_url("url_dev")
 
@@ -14,7 +15,7 @@ def send(encoding: str) -> str:
     data = {
         "ssopublickey": encoding
     }
-    response = requests.post(url, json=data, headers=headers, timeout=5)
+    response = requests.post(url, json=json.dumps(data), headers=headers, timeout=5)
     return response.json()["statuscode"]
 
 

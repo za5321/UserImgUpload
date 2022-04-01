@@ -6,3 +6,5 @@ Config/conf.dtd
 Config/conf.xml
 Func/Crypt.py
 test.py
+dist/
+*.spec

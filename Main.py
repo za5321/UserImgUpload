@@ -34,7 +34,7 @@ if __name__ == "__main__":
         logger.info("FINISHED ENCRYPTION")
 
         logger.info("START SENDING DATA TO MOIN")
-        response = Send.response_status(Send.send(encrypted))
+        response = Send.response_status(Send.send(str(encrypted)))
         if response[0]:
             logger.info("FINISHED SENDING DATA TO MOIN")
             continue
