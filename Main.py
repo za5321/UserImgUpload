@@ -12,7 +12,6 @@ if __name__ == "__main__":
     l.set_handler()
 
     c = Crypt()
-
     logger.info("START GETTING EMPLOYEE LIST")
     employees: dict = Employee().get_employees()
     logger.info("FINISHED GETTING EMPLOYEE LIST")
@@ -30,7 +29,7 @@ if __name__ == "__main__":
 
         plain: dict = Data().get_data(emp_no, name, file)
         logger.info("START ENCRYPTION")
-        encrypted = c.encrypt_TDES(str(plain))
+        encrypted = c.encrypt_MOIN(str(plain))
         logger.info("FINISHED ENCRYPTION")
 
         logger.info("START SENDING DATA TO MOIN")
@@ -39,6 +38,6 @@ if __name__ == "__main__":
             logger.info("FINISHED SENDING DATA TO MOIN")
             continue
         else:
-            logger.error(f"FAILED TO SEND DATA TO MOIN::STATUS CODE::{response[1]}")
+            logger.error(f"FAILED TO SEND DATA TO MOIN::{response[1]}")
             continue
     c.shutdown()

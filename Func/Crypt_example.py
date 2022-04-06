@@ -3,29 +3,28 @@ import jpype
 
 class Crypt:
     def __init__(self):
-        self.classpath = ['./Lib/crypto-example.jar', './Lib/crypto-example.jar']
+        self.classpath = ['./Lib/crypt-example.jar', './Lib/crypt-example.jar']
         if not self.is_JVM_started():
             jpype.startJVM('-ea', classpath=self.classpath)
             self.config()
 
     @staticmethod
     def config():
-        config_pkg = jpype.JPackage('nets.af.common.conf')
+        config_pkg = jpype.JPackage('crypt-example')
         conf = config_pkg.Config.init('./Config/conf.xml')
 
     def encrypt_MOIN(self, data: str) -> str:
-        crypt_pkg = jpype.JPackage('nets.af.common.crypt')
+        crypt_pkg = jpype.JPackage('crypt-example')
         cc = crypt_pkg.Crypt()
         cc.init()
 
-        return cc.getInstance("crypto-example").encrypt(data)
+        return cc.getInstance("crypt-example").encrypt(data)
 
-    def encrypt_TDES(self, data: str) -> str:
-        crypt_pkg = jpype.JPackage('nets.af.common.crypt')
+    def decrypt_MOIN(self, data) -> str:
+        crypt_pkg = jpype.JPackage('crypt-example')
         cc = crypt_pkg.Crypt()
         cc.init()
-
-        return cc.getInstance("crypto-example").encrypt(data)
+        return cc.getInstance("crypt-example").decrypt(data)
 
     @staticmethod
     def shutdown():
