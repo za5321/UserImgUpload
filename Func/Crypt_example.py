@@ -5,7 +5,7 @@ class Crypt:
     def __init__(self):
         self.classpath = ['./Lib/crypt-example.jar', './Lib/crypt-example.jar']
         if not self.is_JVM_started():
-            jpype.startJVM('-ea', classpath=self.classpath)
+            jpype.startJVM('-ea', classpath=self.classpath, convertStrings=True)
             self.config()
 
     @staticmethod

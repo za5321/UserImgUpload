@@ -1,81 +1,79 @@
 import argparse
+import json
+from Config.config import Config
+from Func.Employee import Employee
+from Func.Data import Data
+from Func.File import File
+from Func.Crypt import Crypt
+from Func.Logger import Logger
+from Func import Send
+
+conf = Config()
+c = Crypt()
+l = Logger()
+logger = l.logger
+l.set_handler()
 
 
 def img():
-    from Func.Employee import Employee
-    from Func.Data import Data
-    from Func.File import File
-    from Func.Crypt import Crypt
-    from Func.Logger import Logger
-    from Func import Send
-
-    l = Logger()
-    logger = l.logger
-    l.set_handler()
-
-    c = Crypt()
-
-    logger.info("START GETTING EMPLOYEE LIST")
+    logger.info("Start getting Employee list")
     employees: dict = Employee().get_employees()
-    logger.info("FINISHED GETTING EMPLOYEE LIST")
 
     for emp_no, name in employees.items():
         file_name = emp_no + '.jpg'
         logger.info(f"사번: {emp_no}, 이름: {name}, 파일명: {file_name}")
 
-        logger.info("START GETTING IMAGE FILE")
+        logger.info(f"Start getting profile image::{emp_no}")
         file = File().get_imagebinary(file_name)
         if not file:
-            logger.error(f"{file_name} 파일이 없습니다.")
+            logger.error(f"No such file::{file_name}")
             continue
-        logger.info("FINISHED GETTING IMAGE FILE")
 
         plain: dict = Data().get_data(emp_no, name, file)
-        logger.info("START ENCRYPTION")
+        logger.info("Start encryption")
         encrypted = c.encrypt_MOIN(str(plain))
-        logger.info("FINISHED ENCRYPTION")
 
-        logger.info("START SENDING DATA TO MOIN")
-        response = Send.response_status(Send.send(str(encrypted)))
-        print(response[1], type(response[1]))
-        if response[0]:
-            logger.info("FINISHED SENDING DATA TO MOIN")
+        logger.info(f"Start sending profile image to MOIN::{file_name}")
+        url = conf.get_config_send("url")
+        decrypted = c.decrypt_MOIN(Send.send(url, str(encrypted)))
+
+        response_code = json.loads(decrypted)["statuscode"]
+        if response_code == "202211":
+            logger.info(f"Finished sending profile image to MOIN::{file_name}")
             continue
         else:
-            logger.error(f"FAILED TO SEND DATA TO MOIN::{response[1]}")
-            continue
+            logger.error(f"Failed to send profile image to MOIN::{response_code}")
+        continue
     c.shutdown()
 
 
 def key():
-    from Func.Crypt import Crypt
-    from Func.Logger import Logger
-    from Config.config import Config
     import requests
 
-    l = Logger()
-    logger = l.logger
-    l.set_handler()
+    logger.info("Start getting request key from MOIN")
 
-    logger.info("START GETTING REQUEST KEY FROM MOIN")
+    url = conf.get_config_accesstoken("url")
+    rid = conf.get_config_accesstoken("rid")
+    loginid = conf.get_config_accesstoken("loginid")
+    pwd = conf.get_config_accesstoken("pwd")
 
-    c = Config()
-    url = c.get_config_accesstoken("url")
-    rid = c.get_config_accesstoken("rid")
-    loginid = c.get_config_accesstoken("loginid")
-    pwd = c.get_config_accesstoken("pwd")
-
-    headers = {"Content-Type": "text/plain; charset=utf-8"}
     plain = {
         "rid": rid,
         "loginid": loginid,
         "pwd": pwd
     }
 
-    crypt = Crypt()
-    encrypted = crypt.encrypt_MOIN(str(plain))
-    response = requests.post(url, data=encrypted, headers=headers, timeout=5)
-    Crypt().decrypt_MOIN(response.text)
+    encrypted = c.encrypt_MOIN(str(plain))
+    decrypted = c.decrypt_MOIN(Send.send(url, str(encrypted)))
+
+    response = json.loads(decrypted)
+    response_code = response["statuscode"]
+    request_key = response["requestkey"]
+    if response_code == "201200":
+        logger.info(f"Finished getting request key from MOIN::{request_key}")
+    else:
+        logger.error(f"Failed to get request key from MOIN::{response_code}")
+    c.shutdown()
 
 
 if __name__ == "__main__":
@@ -85,5 +83,5 @@ if __name__ == "__main__":
 
     if args.api == 'img':
         img()
-    #elif args.api == 'key':
-    #    key()
+    elif args.api == 'key':
+        key()
