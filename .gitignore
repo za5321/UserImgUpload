@@ -1,6 +1,7 @@
 *.pyc
 log/
 Lib/
+build/
 Config/config.json
 Config/conf.dtd
 Config/conf.xml

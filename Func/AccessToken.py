@@ -11,7 +11,3 @@ def get_utc() -> str:
 def get_accesstoken():
     from Func.Crypt import Crypt
     return Crypt().encrypt_MOIN(get_requestkey()+'/#/'+get_utc())
-
-
-def get_send_data():
-    pass

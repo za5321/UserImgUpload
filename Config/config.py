@@ -24,5 +24,8 @@ class Config:
     def get_config_send(self, flag: str):
         return self.conf['Send'][flag]
 
+    def get_config_accesstoken(self, flag: str):
+        return self.conf['AccessToken'][flag]
+
     def logging(self, flag: str):
         return self.conf["Logging"][flag]
