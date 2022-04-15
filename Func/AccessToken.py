@@ -4,10 +4,15 @@ def get_requestkey() -> str:
 
 
 def get_utc() -> str:
-    from datetime import datetime
-    return datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    import datetime
+    #return datetime.datetime.utcnow().strftime("%Y%m%d%H%M%S")
+    return (datetime.datetime.utcnow() - datetime.timedelta(minutes=3)).strftime("%Y%m%d%H%M%S")
 
 
 def get_accesstoken():
     from Func.Crypt import Crypt
-    return Crypt().encrypt_MOIN(get_requestkey()+'/#/'+get_utc())
+
+    key = get_requestkey()
+    utc = get_utc()
+    print(key+'/#/'+utc)
+    return Crypt().encrypt_MOIN(key+'/#/'+utc)

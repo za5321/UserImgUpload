@@ -28,8 +28,8 @@ def img():
         if not file:
             logger.error(f"No such file::{file_name}")
             continue
-
         plain: dict = Data().get_data(emp_no, name, file)
+        logger.debug(plain)
         logger.info("Start encryption")
         encrypted = c.encrypt_MOIN(str(plain))
 
@@ -48,8 +48,6 @@ def img():
 
 
 def key():
-    import requests
-
     logger.info("Start getting request key from MOIN")
 
     url = conf.get_config_accesstoken("url")
@@ -62,14 +60,15 @@ def key():
         "loginid": loginid,
         "pwd": pwd
     }
+    logger.debug(plain)
 
+    logger.info("Start encryption")
     encrypted = c.encrypt_MOIN(str(plain))
-    decrypted = c.decrypt_MOIN(Send.send(url, str(encrypted)))
 
-    response = json.loads(decrypted)
+    response = json.loads(Send.send(url, str(encrypted)))
     response_code = response["statuscode"]
-    request_key = response["requestkey"]
     if response_code == "201200":
+        request_key = response["requestKey"]
         logger.info(f"Finished getting request key from MOIN::{request_key}")
     else:
         logger.error(f"Failed to get request key from MOIN::{response_code}")
