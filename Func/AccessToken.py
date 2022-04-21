@@ -14,5 +14,4 @@ def get_accesstoken():
 
     key = get_requestkey()
     utc = get_utc()
-    print(key+'/#/'+utc)
     return Crypt().encrypt_MOIN(key+'/#/'+utc)

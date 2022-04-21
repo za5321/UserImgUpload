@@ -3,5 +3,4 @@ def send(url: str, data: str) -> str:
 
     headers = {"Content-Type": "text/plain; charset=utf-8"}
     response = requests.post(url, data=data, headers=headers, timeout=5)
-    print(response.headers["Date"])
     return response.text

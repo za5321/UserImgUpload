@@ -17,6 +17,7 @@ class File:
                     hex_val = str(hex(ord(bin_val))).replace('0x', '').zfill(2)
                     imagebinary.append(hex_val)
                     bin_val = f.read(1)
+                f.close()
             return " ".join(imagebinary)
         except FileNotFoundError:
             return ""
