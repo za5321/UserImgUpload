@@ -7,7 +7,7 @@ class File:
         from Config.config import Config
         return Config().get_config_file('path')
 
-    def get_imagebinary(self, file: str) -> str:
+    '''def get_imagebinary(self, file: str) -> str:
         imagebinary = []
         file = self.path + file
         try:
@@ -19,5 +19,18 @@ class File:
                     bin_val = f.read(1)
                 f.close()
             return " ".join(imagebinary)
+        except FileNotFoundError:
+            return ""
+    '''
+
+    def get_imagebinary(self, file:str):
+        import binascii
+        file = self.path + file
+
+        try:
+            with open(file, 'rb') as f:
+                bin_val = binascii.hexlify(f.read())
+                f.close()
+            return bin_val
         except FileNotFoundError:
             return ""
