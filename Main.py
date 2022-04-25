@@ -30,8 +30,9 @@ def img():
             continue
         plain: dict = Data().get_data(emp_no, name, file)
         logger.debug(plain)
+
         logger.info("Start encryption")
-        encrypted = c.encrypt_MOIN(str(plain))
+        encrypted = c.encrypt_MOIN(json.dumps(plain))
 
         logger.info(f"Start sending profile image to MOIN::{file_name}")
         url = conf.get_config_send("url")
@@ -60,6 +61,7 @@ def key():
         "loginid": loginid,
         "pwd": pwd
     }
+    plain = json.dumps(plain)
     logger.debug(plain)
 
     logger.info("Start encryption")

@@ -31,6 +31,6 @@ class File:
             with open(file, 'rb') as f:
                 bin_val = binascii.hexlify(f.read())
                 f.close()
-            return bin_val
+            return bin_val.decode('utf8')
         except FileNotFoundError:
             return ""
