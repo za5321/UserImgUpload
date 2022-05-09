@@ -1,3 +1,6 @@
+import cv2
+import numpy as np
+
 class File:
     def __init__(self):
         self.path = self.get_file_path()
@@ -27,10 +30,17 @@ class File:
         import binascii
         file = self.path + file
 
-        try:
-            with open(file, 'rb') as f:
-                bin_val = binascii.hexlify(f.read())
-                f.close()
-            return bin_val.decode('utf8')
-        except FileNotFoundError:
+        img = cv2.imread(file)
+
+        if img is None:
             return ""
+
+        # Image Compression
+        img = cv2.resize(img, (80, 96), interpolation=cv2.INTER_AREA)
+        params = [cv2.IMWRITE_JPEG_QUALITY, 80]
+        msg = cv2.imencode(".jpg", img, params)[1]
+        msg = (np.array(msg)).tobytes()
+        #print(len(msg))
+        bin_val = binascii.hexlify(msg)
+        #print(len(bin_val))
+        return bin_val.decode('utf8')
