@@ -28,6 +28,9 @@ def img():
         if not file:
             logger.error(f"No such file::{file_name}")
             continue
+        elif file == 'dont_update':
+            logger.info(f"{file_name} isn't recently file")
+            continue
         plain: dict = Data().get_data(emp_no, name, file)
         logger.debug(plain)
 

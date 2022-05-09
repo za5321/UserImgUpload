@@ -27,5 +27,8 @@ class Config:
     def get_config_accesstoken(self, flag: str):
         return self.conf['AccessToken'][flag]
 
+    def get_config_datecheck(self, flag: str):
+        return self.conf['DateCheck'][flag]
+
     def logging(self, flag: str):
         return self.conf["Logging"][flag]
