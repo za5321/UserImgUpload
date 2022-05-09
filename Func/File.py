@@ -1,70 +1,46 @@
-import cv2
-import numpy as np
-import os.path, time
-import datetime
+from datetime import datetime, timedelta
+
 
 class File:
-    def __init__(self):
+    def __init__(self, file: str):
         self.path = self.get_file_path()
         self.check = self.get_datecheck()
+        self.file = self.path + file
 
     @staticmethod
     def get_file_path():
         from Config.config import Config
         return Config().get_config_file('path')
 
-    def get_datecheck(self):
+    @staticmethod
+    def get_datecheck():
         from Config.config import Config
         return Config().get_config_datecheck('date')
 
-    '''def get_imagebinary(self, file: str) -> str:
-        imagebinary = []
-        file = self.path + file
-        try:
-            with open(file, 'rb') as f:
-                bin_val = f.read(1)
-                while bin_val:
-                    hex_val = str(hex(ord(bin_val))).replace('0x', '').zfill(2)
-                    imagebinary.append(hex_val)
-                    bin_val = f.read(1)
-                f.close()
-            return " ".join(imagebinary)
-        except FileNotFoundError:
-            return ""
-    '''
+    def file_date_check(self):
+        import os.path
 
-    def get_imagebinary(self, file:str):
+        check_date = datetime.now() - timedelta(days=self.check)
+        try:
+            file_date = datetime.fromtimestamp(os.path.getmtime(self.file))
+            if file_date < check_date:
+                return False
+            return True
+        except FileNotFoundError:
+            return -1
+
+    def get_imagebinary(self):
         import binascii
-        file = self.path + file
+        import cv2
+        import numpy as np
 
-        check = int(self.check)
-        now_date = datetime.datetime.now()
-        check_date = now_date - datetime.timedelta(days=check)
-
-        check_date = check_date.strftime('%Y/%m/%d')
-
-        try:
-            file_date = time.strftime('%Y/%m/%d',time.gmtime(os.path.getmtime(file)))
-        except FileNotFoundError:
-            return ""
-
-        formatted_check_date = time.strptime(check_date, '%Y/%m/%d')
-        formatted_file_date = time.strptime(file_date, '%Y/%m/%d')
-
-        if formatted_check_date > formatted_file_date:
-            return "dont_update"
-
-        img = cv2.imread(file)
-
-        if img is None:
-            return ""
+        img = cv2.imread(self.file)
 
         # Image Compression
         img = cv2.resize(img, (80, 96), interpolation=cv2.INTER_AREA)
         params = [cv2.IMWRITE_JPEG_QUALITY, 80]
         msg = cv2.imencode(".jpg", img, params)[1]
         msg = (np.array(msg)).tobytes()
-        #print(len(msg))
+
         bin_val = binascii.hexlify(msg)
-        #print(len(bin_val))
         return bin_val.decode('utf8')

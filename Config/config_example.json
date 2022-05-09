@@ -16,8 +16,16 @@
     "path": "User Image File directory path"
   },
   "Send": {
-    "url_dev": "url_dev",
-    "url_real": "url_real"
+    "url": "userimgupload_url"
+  },
+  "AccessToken": {
+    "url":"accesstoken_url",
+    "rid": 0,
+    "loginid": "loginid",
+    "pwd": "password"
+  },
+  "DateCheck": {
+    "date": 30
   },
   "Logging": {
     "level": "INFO",

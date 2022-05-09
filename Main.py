@@ -24,14 +24,16 @@ def img():
         logger.info(f"사번: {emp_no}, 이름: {name}, 파일명: {file_name}")
 
         logger.info(f"Start getting profile image::{emp_no}")
-        file = File().get_imagebinary(file_name)
-        if not file:
+        file = File(file_name)
+        file_date = file.file_date_check()
+        if not file_date:
+            logger.info(f"{file_name} isn't a recent file")
+            continue
+        elif file_date == -1:
             logger.error(f"No such file::{file_name}")
             continue
-        elif file == 'dont_update':
-            logger.info(f"{file_name} isn't recently file")
-            continue
-        plain: dict = Data().get_data(emp_no, name, file)
+
+        plain: dict = Data().get_data(emp_no, name, file.get_imagebinary())
         logger.debug(plain)
 
         logger.info("Start encryption")
