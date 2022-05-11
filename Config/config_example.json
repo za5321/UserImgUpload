@@ -27,6 +27,11 @@
   "DateCheck": {
     "date": 30
   },
+  "ImgParameter": {
+    "width": 80,
+    "height": 96,
+    "quality": 80
+  },
   "Logging": {
     "level": "INFO",
     "format": ""

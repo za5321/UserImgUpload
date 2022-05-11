@@ -7,6 +7,11 @@ class File:
         self.check = self.get_datecheck()
         self.file = self.path + file
 
+        from Config.config import Config
+        self.width = Config().get_config_imgparameter('width')
+        self.height = Config().get_config_imgparameter('height')
+        self.quality = Config().get_config_imgparameter('quality')
+
     @staticmethod
     def get_file_path():
         from Config.config import Config
@@ -37,8 +42,8 @@ class File:
         img = cv2.imread(self.file)
 
         # Image Compression
-        img = cv2.resize(img, (80, 96), interpolation=cv2.INTER_AREA)
-        params = [cv2.IMWRITE_JPEG_QUALITY, 80]
+        img = cv2.resize(img, (self.width, self.height), interpolation=cv2.INTER_AREA)
+        params = [cv2.IMWRITE_JPEG_QUALITY, self.quality]
         msg = cv2.imencode(".jpg", img, params)[1]
         msg = (np.array(msg)).tobytes()
 

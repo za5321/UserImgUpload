@@ -30,5 +30,8 @@ class Config:
     def get_config_datecheck(self, flag: str):
         return self.conf['DateCheck'][flag]
 
+    def get_config_imgparameter(self, flag: str):
+        return self.conf['ImgParameter'][flag]
+
     def logging(self, flag: str):
         return self.conf["Logging"][flag]
